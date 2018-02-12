@@ -9,8 +9,9 @@ module ETL
     end
 
     def each
-      csv_file = File.read(input_file)
-      csv = CSV.parse(csv_file, headers: true, header_converters: :symbol)
+      csv_file = File.open(input_file)
+      csv_string = csv_file.read.encode!('UTF-8', 'iso-8859-1', invalid: :replace)
+      csv = CSV.parse(csv_string, headers: true, header_converters: :symbol)
       csv.each do |row|
         yield(row.to_hash)
       end
