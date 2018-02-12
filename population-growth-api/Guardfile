@@ -48,7 +48,7 @@ guard :rspec, cmd: 'bundle exec rspec --color --format documentation --tag focus
     [
       rspec.spec.call("routing/#{m[1]}_routing"),
       rspec.spec.call("controllers/#{m[1]}_controller"),
-      rspec.spec.call("requests/v1/#{m[1]}_request")
+      rspec.spec.call("requests/#{m[1]}_request")
     ]
   end
 
