@@ -115,7 +115,7 @@ RSpec.describe ETL::ImportCensus do
         service = build_alternate_cbsa_service
         expect { service.import }
           .to change(
-            CoreBasedStatisticalArea.where(cbsa: '20000'), :count
+            CoreBasedStatisticalArea.where(cbsa: '10001'), :count
           ).by(1)
       end
 
@@ -130,7 +130,7 @@ RSpec.describe ETL::ImportCensus do
       it 'creates zip code mapped to core based statistical area' do
         service = build_alternate_cbsa_service
         zip_code = create(:zip_code)
-        cbsa = create(:core_based_statistical_area)
+        cbsa = create(:core_based_statistical_area, cbsa: '10001')
         expect { service.import }
           .to change(
             ZipCodeCoreBasedStatisticalArea.where(
@@ -142,7 +142,7 @@ RSpec.describe ETL::ImportCensus do
 
       it 'creates core based statistical area mapped to metropolitan statistical area' do
         service = build_alternate_cbsa_service
-        cbsa = create(:core_based_statistical_area)
+        cbsa = create(:core_based_statistical_area, cbsa: '10001')
         msa = create(:metropolitan_statistical_area)
         expect { service.import }
           .to change(

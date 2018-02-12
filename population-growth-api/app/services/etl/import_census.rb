@@ -14,7 +14,7 @@ module ETL
           alternate_cbsa = cbsa_to_msa[cbsa.to_sym]
           true_cbsa = alternate_cbsa.nil? ? cbsa : alternate_cbsa.first
 
-          cbsa_record = CoreBasedStatisticalArea.find_or_create_by(cbsa: true_cbsa)
+          cbsa_record = CoreBasedStatisticalArea.find_or_create_by(cbsa: cbsa)
           ZipCodeCoreBasedStatisticalArea.find_or_create_by(
             zip_code: zip_code,
             core_based_statistical_area: cbsa_record
