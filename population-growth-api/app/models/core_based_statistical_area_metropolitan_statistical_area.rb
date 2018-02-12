@@ -1,0 +1,4 @@
+class CoreBasedStatisticalAreaMetropolitanStatisticalArea < ApplicationRecord
+  belongs_to :core_based_statistical_area
+  belongs_to :metropolitan_statistical_area
+end
