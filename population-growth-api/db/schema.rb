@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180212092230) do
+ActiveRecord::Schema.define(version: 20180212172851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20180212092230) do
     t.integer "metropolitan_statistical_area_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["core_based_statistical_area_id", "metropolitan_statistical_area_id"], name: "idx_cbsa_msa_on_cbsa_id_msa_id", unique: true
   end
 
   create_table "core_based_statistical_areas", force: :cascade do |t|
