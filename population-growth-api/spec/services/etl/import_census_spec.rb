@@ -20,9 +20,13 @@ RSpec.describe ETL::ImportCensus do
 
     it 'creates metropolitan statistical area' do
       service = build_normal_service
+      cbsa = create(:core_based_statistical_area)
       expect { service.import }
         .to change(
-          MetropolitanStatisticalArea.where(name: 'Test'), :count
+          MetropolitanStatisticalArea.where(
+            core_based_statistical_area_id: cbsa.id,
+            name: 'Test'
+          ), :count
         ).by(1)
     end
 
@@ -35,19 +39,6 @@ RSpec.describe ETL::ImportCensus do
           ZipCodeCoreBasedStatisticalArea.where(
             zip_code_id: zip_code.id,
             core_based_statistical_area_id: cbsa.id
-          ), :count
-        ).by(1)
-    end
-
-    it 'creates core based statistical area mapped to metropolitan statistical area' do
-      service = build_normal_service
-      cbsa = create(:core_based_statistical_area)
-      msa = create(:metropolitan_statistical_area)
-      expect { service.import }
-        .to change(
-          CoreBasedStatisticalAreaMetropolitanStatisticalArea.where(
-            core_based_statistical_area_id: cbsa.id,
-            metropolitan_statistical_area: msa.id
           ), :count
         ).by(1)
     end
@@ -71,9 +62,13 @@ RSpec.describe ETL::ImportCensus do
 
       it 'does not create metropolitan statistical area' do
         service = build_no_msa_service
+        cbsa = create(:core_based_statistical_area)
         expect { service.import }
           .not_to change(
-            MetropolitanStatisticalArea.where(name: 'Test'), :count
+            MetropolitanStatisticalArea.where(
+              core_based_statistical_area_id: cbsa.id,
+              name: 'Test'
+            ), :count
           )
       end
 
@@ -88,17 +83,6 @@ RSpec.describe ETL::ImportCensus do
               core_based_statistical_area_id: cbsa.id
             ), :count
           ).by(1)
-      end
-
-      it 'does not create core based statistical area mapped to metropolitan statistical area' do
-        service = build_no_msa_service
-        cbsa = create(:core_based_statistical_area)
-        expect { service.import }
-          .not_to change(
-            CoreBasedStatisticalAreaMetropolitanStatisticalArea.where(
-              core_based_statistical_area_id: cbsa.id
-            ), :count
-          )
       end
     end
 
@@ -121,9 +105,13 @@ RSpec.describe ETL::ImportCensus do
 
       it 'creates metropolitan statistical area' do
         service = build_alternate_cbsa_service
+        cbsa = create(:core_based_statistical_area, cbsa: '10001')
         expect { service.import }
           .to change(
-            MetropolitanStatisticalArea.where(name: 'Test'), :count
+            MetropolitanStatisticalArea.where(
+              core_based_statistical_area_id: cbsa.id,
+              name: 'Test'
+            ), :count
           ).by(1)
       end
 
@@ -136,19 +124,6 @@ RSpec.describe ETL::ImportCensus do
             ZipCodeCoreBasedStatisticalArea.where(
               zip_code_id: zip_code.id,
               core_based_statistical_area_id: cbsa.id
-            ), :count
-          ).by(1)
-      end
-
-      it 'creates core based statistical area mapped to metropolitan statistical area' do
-        service = build_alternate_cbsa_service
-        cbsa = create(:core_based_statistical_area, cbsa: '10001')
-        msa = create(:metropolitan_statistical_area)
-        expect { service.import }
-          .to change(
-            CoreBasedStatisticalAreaMetropolitanStatisticalArea.where(
-              core_based_statistical_area_id: cbsa.id,
-              metropolitan_statistical_area: msa.id
             ), :count
           ).by(1)
       end

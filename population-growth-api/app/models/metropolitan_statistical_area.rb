@@ -1,4 +1,6 @@
 class MetropolitanStatisticalArea < ApplicationRecord
+  belongs_to :core_based_statistical_area
+
   validates :name,
             presence: true,
             length: { maximum: 100 }

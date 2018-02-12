@@ -1,6 +1,5 @@
 class CoreBasedStatisticalArea < ApplicationRecord
-  has_many :core_based_statistical_area_metropolitan_statistical_areas
-  has_many :metropolitan_statistical_areas, through: :core_based_statistical_area_metropolitan_statistical_areas
+  has_one :metropolitan_statistical_area
 
   validates :cbsa,
             presence: true,

@@ -24,14 +24,11 @@ module ETL
           name = metro_row[:name]
           population_2014 = metro_row[:population_2014]
           population_2015 = metro_row[:population_2015]
-          metro_area = MetropolitanStatisticalArea.find_or_create_by(
+          MetropolitanStatisticalArea.find_or_create_by(
+            core_based_statistical_area: cbsa_record,
             name: name,
             population_2014: population_2014,
             population_2015: population_2015
-          )
-          CoreBasedStatisticalAreaMetropolitanStatisticalArea.find_or_create_by(
-            core_based_statistical_area: cbsa_record,
-            metropolitan_statistical_area: metro_area
           )
         end
       end

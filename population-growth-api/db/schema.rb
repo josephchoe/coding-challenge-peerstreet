@@ -10,18 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180212172851) do
+ActiveRecord::Schema.define(version: 20180212225609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "core_based_statistical_area_metropolitan_statistical_areas", id: :bigint, default: -> { "nextval('core_based_statistical_area_metropolitan_statistical_are_id_seq'::regclass)" }, force: :cascade do |t|
-    t.integer "core_based_statistical_area_id", null: false
-    t.integer "metropolitan_statistical_area_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["core_based_statistical_area_id", "metropolitan_statistical_area_id"], name: "idx_cbsa_msa_on_cbsa_id_msa_id", unique: true
-  end
 
   create_table "core_based_statistical_areas", force: :cascade do |t|
     t.string "cbsa", limit: 5, null: false
@@ -31,6 +23,7 @@ ActiveRecord::Schema.define(version: 20180212172851) do
   end
 
   create_table "metropolitan_statistical_areas", force: :cascade do |t|
+    t.integer "core_based_statistical_area_id", null: false
     t.string "name", limit: 100, null: false
     t.integer "population_2014", null: false
     t.integer "population_2015", null: false
@@ -52,8 +45,7 @@ ActiveRecord::Schema.define(version: 20180212172851) do
     t.index ["zip_code"], name: "index_zip_codes_on_zip_code"
   end
 
-  add_foreign_key "core_based_statistical_area_metropolitan_statistical_areas", "core_based_statistical_areas"
-  add_foreign_key "core_based_statistical_area_metropolitan_statistical_areas", "metropolitan_statistical_areas"
+  add_foreign_key "metropolitan_statistical_areas", "core_based_statistical_areas"
   add_foreign_key "zip_code_core_based_statistical_areas", "core_based_statistical_areas"
   add_foreign_key "zip_code_core_based_statistical_areas", "zip_codes"
 end
