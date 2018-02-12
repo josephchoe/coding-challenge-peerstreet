@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ETL::CsvSource do
+RSpec.describe ETL::Sources::CsvSource do
   describe '#each' do
     it 'parses to hash' do
       service = described_class.new(input_file: file_fixture('test.csv'))

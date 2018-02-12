@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ETL::ExcludeField do
+RSpec.describe ETL::Transforms::ExcludeField do
   describe '#process' do
     it 'excludes all fields except given keys' do
       service = described_class.new(except: [:column1, :column2])

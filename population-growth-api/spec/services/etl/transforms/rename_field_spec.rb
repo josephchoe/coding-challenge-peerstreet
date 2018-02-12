@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ETL::RenameField do
+RSpec.describe ETL::Transforms::RenameField do
   describe '#process' do
     it 'renames field' do
       service = described_class.new(from: :column, to: :new_column)
