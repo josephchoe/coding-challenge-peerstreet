@@ -2,6 +2,52 @@ require 'rails_helper'
 
 RSpec.describe '/census', type: :request do
   describe 'GET #index' do
+    context 'when querying with no zip_code' do
+      it 'returns 400 bad request' do
+        get '/census'
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'renders in JSON' do
+        get '/census'
+        expect(response.content_type).to eql('application/json')
+      end
+
+      it 'returns response' do
+        get '/census'
+        expect(parse_json(response)).to eql(
+          errors: [
+            {
+              message: 'requires \'zip_code\' parameter'
+            }
+          ]
+        )
+      end
+    end
+
+    context 'when querying with no badly formatted request' do
+      it 'returns 400 bad request' do
+        send_get_query(query_zip_code: 'zzz')
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'renders in JSON' do
+        send_get_query(query_zip_code: 'zzz')
+        expect(response.content_type).to eql('application/json')
+      end
+
+      it 'returns response' do
+        send_get_query(query_zip_code: 'zzz')
+        expect(parse_json(response)).to eql(
+          errors: [
+            {
+              message: '\'zip_code\' parameter must be five digits'
+            }
+          ]
+        )
+      end
+    end
+
     context 'when querying with no records' do
       it 'returns 200 ok response' do
         send_get_query
