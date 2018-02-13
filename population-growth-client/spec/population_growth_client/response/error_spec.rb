@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'population_growth_client/response/error'
 
 RSpec.describe PopulationGrowthClient::Error do
   describe '#message' do
