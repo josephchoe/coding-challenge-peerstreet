@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the repository for the population-growth-api.
 
-Things you may want to cover:
+## ETL
 
-* Ruby version
+I've uploaded the provided CSV files to an S3 bucket. Importing them can be done via `bundle exec rake import:census`.
 
-* System dependencies
+## Endpoint
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+http://production.ei5pmnpwgf.us-east-1.elasticbeanstalk.com/census?zip_code={zip_code}
